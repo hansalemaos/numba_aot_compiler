@@ -88,5 +88,168 @@ print(qq)
 # 70.4 ms ± 484 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
 ```
 
+### More (not organized) examples
+
+```python
+
+
+import numba
+import numpy as np
+from numba import uint32, float64, prange, types, uint8, uint16
+from numba_aot_compiler import compnumba
+from numba.typed import Dict
+
+
+def go_fast(a):
+    no = 1
+    for r in range(10):
+        a[r] += no
+    return a
+
+
+def prange_wrong_result(x):
+    n = x.shape[0]
+    y = np.zeros(4)
+    for i in prange(n):
+        y[:] += x[i]
+
+    return y
+
+
+def test(x, a, b):
+    for aa, bb in zip(a, b):
+        x = x.replace(aa, bb)
+    return x
+
+
+def square_list(n):
+    lili = numba.typed.List()
+    [lili.append(x**2) for x in n]
+    return lili
+
+
+def foo(x):
+    return [[i for i in range(n)] for n in range(x)]
+
+
+float_array = float64[:]
+
+
+def foxo():
+    # Make dictionary
+    d = Dict.empty(
+        key_type=types.unicode_type,
+        value_type=float_array,
+    )
+    # Fill the dictionary
+    d["posx"] = np.arange(3).astype(np.float64)
+    d["posy"] = np.arange(3, 6).astype(np.float64)
+    return d
+
+
+def g(r, g, b, rgb, res, res2, endxy, divider):
+    zaehler = 0
+    for i in range(r.shape[0]):
+        if r[i] == rgb[0] and g[i] == rgb[1] and b[i] == rgb[2]:
+            dvquot, dvrem = divmod(i, divider)
+            res[zaehler] = dvquot
+            res2[zaehler] = dvrem
+            endxy[0] = zaehler
+            zaehler = zaehler + 1
+
+
+compilethose = True
+if compilethose:
+    compi = compnumba(
+        fu=go_fast,
+        funcname="gofastfu",
+        file="gofastfile",
+        folder=r"numbatestcomp",
+        signature=(uint32[:](uint32[:])),
+        parallel=True,
+        fastmath=True,
+    )
+    # print(compi)
+    # exec(compi)
+    compi = compnumba(
+        fu=prange_wrong_result,
+        funcname="prange_wrong_resultfu",
+        file="prange_wrong_resultfile",
+        folder=r"numbatestcomp",
+        signature=(float64[:](float64[:])),
+        parallel=False,
+        fastmath=True,
+    )
+    # print(compi)
+    # a=np.array([1,2,34,4,45,5,56,67,7,87,123],dtype=np.float64)
+    # exec(compi)
+    # a1=prange_wrong_resultfu(a)
+    # print(a1)
+    compi = compnumba(
+        fu=test,
+        funcname="testfu",
+        file="testfile",
+        folder=r"numbatestcomp",
+        signature=((types.unicode_type, types.unicode_type, types.unicode_type)),
+        parallel=True,
+        fastmath=True,
+    )
+    # print(compi)
+    # a='hallo'
+    # exec(compi)
+    # a1=testfu(a,ascii_lowercase,ascii_uppercase)
+    # print(a1)
+
+    compi = compnumba(
+        fu=square_list,
+        funcname="square_list_fu",
+        file="square_list_file",
+        folder=r"numbatestcomp",
+        signature=((float64[:],)),
+        parallel=True,
+        fastmath=True,
+        nogil=True,
+    )
+    # print(compi)
+    # a=np.arange(1,2000000)
+    # py_listx = a.astype(np.float64)
+    # exec(compi)
+    # a1=square_list_fu(py_listx.copy())
+    # print(a1)
+
+    compi = compnumba(
+        fu=foo,
+        funcname="foo_fu",
+        file="foo_file",
+        folder=r"numbatestcomp",
+        signature=((uint32,)),
+        parallel=True,
+        fastmath=True,
+        nogil=False,
+    )
+    # print(compi)
+    # a=np.uint32(100)
+    # exec(compi)
+    # a1=foo_fu(a)
+    # print(a1)
+
+    compi = compnumba(
+        fu=foxo,
+        funcname="foxo_fu",
+        file="foxo_file",
+        folder=r"numbatestcomp",
+        signature=(()),
+        parallel=True,
+        fastmath=True,
+        nogil=False,
+    )
+    # print(compi)
+    ##a = float_arrayx = types.float64[:]
+    # exec(compi)
+    # a1 = foxo_fu()
+    # print(a1)
+```
+
+
 
 
