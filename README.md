@@ -158,96 +158,94 @@ def g(r, g, b, rgb, res, res2, endxy, divider):
             zaehler = zaehler + 1
 
 
-compilethose = True
-if compilethose:
-    compi = compnumba(
-        fu=go_fast,
-        funcname="gofastfu",
-        file="gofastfile",
-        folder=r"numbatestcomp",
-        signature=(uint32[:](uint32[:])),
-        parallel=True,
-        fastmath=True,
-    )
-    # print(compi)
-    # exec(compi)
-    compi = compnumba(
-        fu=prange_wrong_result,
-        funcname="prange_wrong_resultfu",
-        file="prange_wrong_resultfile",
-        folder=r"numbatestcomp",
-        signature=(float64[:](float64[:])),
-        parallel=False,
-        fastmath=True,
-    )
-    # print(compi)
-    # a=np.array([1,2,34,4,45,5,56,67,7,87,123],dtype=np.float64)
-    # exec(compi)
-    # a1=prange_wrong_resultfu(a)
-    # print(a1)
-    compi = compnumba(
-        fu=test,
-        funcname="testfu",
-        file="testfile",
-        folder=r"numbatestcomp",
-        signature=((types.unicode_type, types.unicode_type, types.unicode_type)),
-        parallel=True,
-        fastmath=True,
-    )
-    # print(compi)
-    # a='hallo'
-    # exec(compi)
-    # a1=testfu(a,ascii_lowercase,ascii_uppercase)
-    # print(a1)
+compi = compnumba(
+    fu=go_fast,
+    funcname="gofastfu",
+    file="gofastfile",
+    folder=r"numbatestcomp",
+    signature=(uint32[:](uint32[:])),
+    parallel=True,
+    fastmath=True,
+)
+# print(compi)
+# exec(compi)
+compi = compnumba(
+    fu=prange_wrong_result,
+    funcname="prange_wrong_resultfu",
+    file="prange_wrong_resultfile",
+    folder=r"numbatestcomp",
+    signature=(float64[:](float64[:])),
+    parallel=False,
+    fastmath=True,
+)
+# print(compi)
+# a=np.array([1,2,34,4,45,5,56,67,7,87,123],dtype=np.float64)
+# exec(compi)
+# a1=prange_wrong_resultfu(a)
+# print(a1)
+compi = compnumba(
+    fu=test,
+    funcname="testfu",
+    file="testfile",
+    folder=r"numbatestcomp",
+    signature=((types.unicode_type, types.unicode_type, types.unicode_type)),
+    parallel=True,
+    fastmath=True,
+)
+# print(compi)
+# a='hallo'
+# exec(compi)
+# a1=testfu(a,ascii_lowercase,ascii_uppercase)
+# print(a1)
 
-    compi = compnumba(
-        fu=square_list,
-        funcname="square_list_fu",
-        file="square_list_file",
-        folder=r"numbatestcomp",
-        signature=((float64[:],)),
-        parallel=True,
-        fastmath=True,
-        nogil=True,
-    )
-    # print(compi)
-    # a=np.arange(1,2000000)
-    # py_listx = a.astype(np.float64)
-    # exec(compi)
-    # a1=square_list_fu(py_listx.copy())
-    # print(a1)
+compi = compnumba(
+    fu=square_list,
+    funcname="square_list_fu",
+    file="square_list_file",
+    folder=r"numbatestcomp",
+    signature=((float64[:],)),
+    parallel=True,
+    fastmath=True,
+    nogil=True,
+)
+# print(compi)
+# a=np.arange(1,2000000)
+# py_listx = a.astype(np.float64)
+# exec(compi)
+# a1=square_list_fu(py_listx.copy())
+# print(a1)
 
-    compi = compnumba(
-        fu=foo,
-        funcname="foo_fu",
-        file="foo_file",
-        folder=r"numbatestcomp",
-        signature=((uint32,)),
-        parallel=True,
-        fastmath=True,
-        nogil=False,
-    )
-    # print(compi)
-    # a=np.uint32(100)
-    # exec(compi)
-    # a1=foo_fu(a)
-    # print(a1)
+compi = compnumba(
+    fu=foo,
+    funcname="foo_fu",
+    file="foo_file",
+    folder=r"numbatestcomp",
+    signature=((uint32,)),
+    parallel=True,
+    fastmath=True,
+    nogil=False,
+)
+# print(compi)
+# a=np.uint32(100)
+# exec(compi)
+# a1=foo_fu(a)
+# print(a1)
 
-    compi = compnumba(
-        fu=foxo,
-        funcname="foxo_fu",
-        file="foxo_file",
-        folder=r"numbatestcomp",
-        signature=(()),
-        parallel=True,
-        fastmath=True,
-        nogil=False,
-    )
-    # print(compi)
-    ##a = float_arrayx = types.float64[:]
-    # exec(compi)
-    # a1 = foxo_fu()
-    # print(a1)
+compi = compnumba(
+    fu=foxo,
+    funcname="foxo_fu",
+    file="foxo_file",
+    folder=r"numbatestcomp",
+    signature=(()),
+    parallel=True,
+    fastmath=True,
+    nogil=False,
+)
+# print(compi)
+##a = float_arrayx = types.float64[:]
+# exec(compi)
+# a1 = foxo_fu()
+# print(a1)
 ```
 
 
